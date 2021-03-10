@@ -20,9 +20,6 @@ public class TestLibretto {
 		
 		System.out.println(libretto) ;
 		
-		List<Voto> venticinque = libretto.listaVotiUguali(25) ;
-		System.out.println(venticinque);
-		
 		Libretto librettoventicinque = libretto.votiUguali(25) ;
 		System.out.println(librettoventicinque) ;
 		
