@@ -3,24 +3,69 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.librettovoti.FXMLController">
+<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.librettovoti.FXMLController">
+   <top>
+      <Label text="Indovina il Numero!" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-              <Button fx:id="button" onAction="#handleButtonAction" text="Click Me!" />
-              <Label fx:id="label" minHeight="16" minWidth="69">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Label>
+            <HBox>
+               <children>
+                  <Button fx:id="btnNuovaPartita" mnemonicParsing="false" onAction="#doNuovaPartita" text="Nuova Partita">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Label text="tentativi rimasti" textFill="#6652d9">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtTentativi" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <TextField fx:id="txtTentativoUtente" promptText="inserisci  un numero" />
+                  <Button fx:id="btnProva" mnemonicParsing="false" onAction="#doTentativo" text="Prova">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </HBox>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
    </center>
+   <bottom>
+      <TextArea fx:id="txtRisultato" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </bottom>
 </BorderPane>
