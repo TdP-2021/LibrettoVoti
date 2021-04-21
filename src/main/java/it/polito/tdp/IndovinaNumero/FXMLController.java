@@ -1,4 +1,4 @@
-package it.polito.tdp.librettovoti;
+package it.polito.tdp.IndovinaNumero;
 
 import java.net.URL;
 import java.util.ResourceBundle;

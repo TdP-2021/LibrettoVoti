@@ -1,4 +1,4 @@
-package it.polito.tdp.librettovoti;
+package it.polito.tdp.IndovinaNumero;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
