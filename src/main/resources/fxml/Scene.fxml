@@ -36,13 +36,13 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtTentativi" />
+                  <TextField fx:id="txtTentativi" editable="false" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox>
+            <HBox fx:id="layoutTentativo" disable="true">
                <children>
                   <TextField fx:id="txtTentativoUtente" promptText="inserisci  un numero" />
                   <Button fx:id="btnProva" mnemonicParsing="false" onAction="#doTentativo" text="Prova">

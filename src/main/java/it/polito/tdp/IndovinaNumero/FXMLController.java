@@ -1,6 +1,7 @@
 package it.polito.tdp.IndovinaNumero;
 
 import java.net.URL;
+import java.security.InvalidParameterException;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.IndovinaNumero.model.Model;
@@ -9,21 +10,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 public class FXMLController {
 	private Model model;
 	
-	private final int NMAX = 100;
-	private final int TMAX = 8;
-	private int segreto;
-	private int tentativiFatti;
-	private boolean inGioco= false;
+	
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
+    
+    @FXML // fx:id="layoutTentativo"
+    private HBox layoutTentativo; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnNuovaPartita"
     private Button btnNuovaPartita; // Value injected by FXMLLoader
@@ -42,15 +43,13 @@ public class FXMLController {
 
     @FXML
     void doNuovaPartita(ActionEvent event) {
-    	// gestione inizio nuova partita
-    	this.segreto= (int) (Math.random() * NMAX) + 1;
-    	this.tentativiFatti = 0 ;
-    	this.inGioco = true;
-    	
+    	// inizio la nuova partita
+    	this.model.nuovaPartita();
     	// gestione dell' interfaccia
-    	this.txtTentativi.setText(Integer.toString(TMAX));
+    	this.txtRisultato.clear();
+    	this.txtTentativi.setText(Integer.toString(this.model.getTMAX()));
+        this.layoutTentativo.setDisable(false);
     }
-
     @FXML
     void doTentativo(ActionEvent event) {
     // lettura input utente e controllo dell input
@@ -64,29 +63,29 @@ public class FXMLController {
     		return; // esco non permetto all'utente di continuare
     	}
     	txtTentativoUtente.setText("");
-    	tentativiFatti ++;
-    	this.txtTentativi.setText(Integer.toString(TMAX-tentativiFatti));
+    	this.txtTentativi.setText(Integer.toString(this.model.getTMAX()-this.model.getTentativiFatti()));
+    	int result;
+    	try {
+    	result= this.model.tentativo(tentativo);
+    	}catch(IllegalStateException se) {
+    		this.txtRisultato.setText(se.getMessage());
+    		return ;
+    	}catch(InvalidParameterException pe) {
+    		this.txtRisultato.setText(pe.getMessage());
+    		return ;
+    	}
     	
-    	if(tentativo == segreto) {
-    		txtRisultato.setText("HAI VINTO CON " + tentativiFatti + "TENTATIVI!");
-    		inGioco = false;
+    	if(result == 0) {
+    		//Ho indovinato
+    		txtRisultato.setText("HAI VINTO CON " + this.model.getTentativiFatti() + " TENTATIVI!");
+    		this.layoutTentativo.setDisable(true);
     		return; // il metodo finisce qui
+    	}else if(result<0) {
+    		txtRisultato.setText("TENTATIVO TROPPO BASSO");
     	}
-    	
-    	if(tentativiFatti == TMAX) {
-    		// ho perso!
-    		txtRisultato.appendText("HAI PERSO ! IL NUMERO ERA :"+ segreto);	
-    		inGioco = false;
-    		return;
+    	else {
+    		txtRisultato.setText("TENTATIVO TROPPO ALTO");
     	}
-    	
-    	// non ho finito -> devo informare il giocatore circa la bontà del suo tentativo
-    	if(tentativo < this.segreto) {
-    		txtRisultato.appendText("TENTATIVO TROPPO BASSO");
-    	} else {
-    		txtRisultato.appendText("TENTATIVO TROPPO ALTO");
-    	}
-    	
     	
     }
 
